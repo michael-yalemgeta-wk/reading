@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './ConfigScreen.css';
 import type { QuizMode, Question } from '../types';
 import { validateQuestionsJSON } from '../utils/validation';
@@ -8,13 +8,19 @@ interface ConfigScreenProps {
 }
 
 const ConfigScreen: React.FC<ConfigScreenProps> = ({ onStart }) => {
-    const [jsonInput, setJsonInput] = useState('');
+    const [jsonInput, setJsonInput] = useState(() => {
+        return localStorage.getItem('quiz_json_input') || '';
+    });
     const [mode, setMode] = useState<QuizMode>('learning');
     const [count, setCount] = useState(5);
     const [errors, setErrors] = useState<string[]>([]);
     const [copiedPrompt, setCopiedPrompt] = useState(false);
     const [copiedError, setCopiedError] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        localStorage.setItem('quiz_json_input', jsonInput);
+    }, [jsonInput]);
 
     const handleStart = () => {
         setErrors([]);
@@ -144,6 +150,11 @@ Here is the text to convert: `;
                     <div className="file-upload">
                         <span>Or upload a file:</span>
                         <input type="file" accept=".json" onChange={handleFileUpload} />
+                        {jsonInput && (
+                            <button className="btn-ghost small" onClick={() => { setJsonInput(''); setErrors([]); }}>
+                                🗑️ Clear Input
+                            </button>
+                        )}
                     </div>
                 </div>
 

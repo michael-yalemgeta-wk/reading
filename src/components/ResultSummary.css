@@ -12,7 +12,7 @@
     align-items: center;
     gap: 2rem;
     padding: 3rem;
-    background: var(--primary-gradient);
+    background: var(--grad);
 }
 
 .summary-header h1 {
@@ -63,14 +63,17 @@
 
 .review-card {
     border-left: 6px solid transparent;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
 }
 
 .review-card.correct {
-    border-left-color: var(--success-color);
+    border-left-color: var(--green);
 }
 
 .review-card.incorrect {
-    border-left-color: var(--error-color);
+    border-left-color: var(--red);
 }
 
 .summary-actions {
@@ -132,13 +135,15 @@
 
 .answer-box {
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
 }
 
 .answer-box.correct {
-    background: rgba(34, 197, 94, 0.05);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    background: rgba(34, 197, 94, 0.08);
+    /* slightly higher visibility for texts inside */
+    border: 1px solid var(--green);
 }
 
 .answer-box .label {
@@ -157,7 +162,8 @@
 .explanation-box {
     background: rgba(255, 255, 255, 0.03);
     padding: 1.2rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--primary);
 }
 
 .explanation-box h4 {

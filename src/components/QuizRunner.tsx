@@ -8,11 +8,12 @@ interface QuizRunnerProps {
     questions: Question[];
     mode: QuizMode;
     onFinish: (answers: (number | null)[]) => void;
+    onQuit: () => void;
 }
 
 const TEST_MODE_TIME_LIMIT_PER_Q = 30; // 30 seconds per question
 
-const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, mode, onFinish }) => {
+const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, mode, onFinish, onQuit }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
     const [showFeedback, setShowFeedback] = useState(false);
@@ -59,8 +60,10 @@ const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, mode, onFinish }) =>
     }, [timeLeft, mode, currentAnswer, currentIndex, userAnswers]);
 
     const handleAnswer = (choiceIndex: number) => {
-        if (userAnswers[currentIndex] !== null) return; // Don't re-answer
+        // In learning mode, don't allow changing answers after feedback is shown
+        if (mode === 'learning' && userAnswers[currentIndex] !== null) return;
 
+        // In test mode, allow changing answer until they click 'Next'
         const newAnswers = [...userAnswers];
         newAnswers[currentIndex] = choiceIndex;
         setUserAnswers(newAnswers);
@@ -90,11 +93,16 @@ const QuizRunner: React.FC<QuizRunnerProps> = ({ questions, mode, onFinish }) =>
                 <div className="mode-badge">
                     {mode === 'learning' ? '📚 Learning Mode' : '📝 Test Mode'}
                 </div>
-                {mode === 'test' && (
-                    <div className={`timer-badge ${timeLeft <= 5 ? 'danger' : ''}`}>
-                        ⏱ {formatTime(timeLeft)}
-                    </div>
-                )}
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {mode === 'test' && (
+                        <div className={`timer-badge ${timeLeft <= 5 ? 'danger' : ''}`}>
+                            ⏱ {formatTime(timeLeft)}
+                        </div>
+                    )}
+                    <button className="btn-ghost small" onClick={onQuit} title="Quit Quiz">
+                        ✖ Quit
+                    </button>
+                </div>
             </div>
 
             <QuestionCard

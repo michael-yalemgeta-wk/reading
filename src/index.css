@@ -158,11 +158,12 @@ textarea:focus {
 
 .toggle-group {
   display: flex;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  padding: 0.25rem;
-  gap: 0.25rem;
+  border-radius: var(--btn-radius);
+  /* Outer pill shape */
+  padding: 0.35rem;
+  gap: 0.35rem;
 }
 
 .toggle-btn {
@@ -171,9 +172,10 @@ textarea:focus {
   background: transparent;
   color: var(--muted);
   border: none;
-  border-radius: 0.6rem;
-  font-weight: 600;
-  font-size: 0.9rem;
+  border-radius: var(--btn-radius);
+  /* pill shape inside the toggle */
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -210,22 +212,33 @@ button {
   background: var(--grad);
   color: white;
   border: none;
-  border-radius: var(--radius);
-  padding: 0.8rem 1.8rem;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: transform 0.15s, box-shadow 0.15s;
+  border-radius: var(--btn-radius);
+  /* Duolingo Pill */
+  padding: 0.9rem 2rem;
+  font-weight: 800;
+  /* Bolder button text */
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
+  /* Teal glow */
 }
 
 .btn-primary.large {
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
+  padding: 1.1rem 2.5rem;
+  font-size: 1.15rem;
   width: 100%;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
+}
+
+/* Duolingo tactile squish on click */
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.2);
 }
 
 .btn-primary:disabled {
@@ -237,16 +250,24 @@ button {
 .btn-ghost {
   background: transparent;
   color: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  padding: 0.5rem 1rem;
+  border: 2px solid var(--border);
+  /* Duolingo slightly chunkier borders */
+  border-radius: var(--btn-radius);
+  padding: 0.5rem 1.2rem;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-ghost:hover {
   border-color: var(--primary);
   color: var(--text);
+  background: rgba(20, 184, 166, 0.05);
+}
+
+/* Duolingo tactile squish */
+.btn-ghost:active {
+  transform: scale(0.97);
 }
 
 .btn-ghost.small {
@@ -606,6 +627,45 @@ button {
 
 .app>* {
   animation: fadeUp 0.35s ease both;
+}
+
+/* ── Light Mode Theme ────────────────────────────────────────── */
+
+:root[data-theme='light'] {
+  --bg: #f4f4f5;
+  /* zinc-100 */
+  --bg2: #ffffff;
+  /* pure white */
+  --border: rgba(0, 0, 0, 0.1);
+  --text: #09090b;
+  /* zinc-950 */
+  --muted: #52525b;
+  /* zinc-600 */
+  --shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='light'] textarea,
+:root[data-theme='light'] .json-format-box,
+:root[data-theme='light'] .prompt-box,
+:root[data-theme='light'] .count-input,
+:root[data-theme='light'] .mode-toggle,
+:root[data-theme='light'] .json-textarea {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--text);
+}
+
+:root[data-theme='light'] .toggle-group {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+:root[data-theme='light'] .review-card {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+:root[data-theme='light'] .answer-box,
+:root[data-theme='light'] .explanation-box,
+:root[data-theme='light'] .choice {
+  background: rgba(0, 0, 0, 0.03);
 }
 
 /* ── Mobile ─────────────────────────────────────────────────── */
